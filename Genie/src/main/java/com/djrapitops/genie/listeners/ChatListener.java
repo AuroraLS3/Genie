@@ -9,7 +9,9 @@ import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.task.AbsRunnable;
+
 import java.util.UUID;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,7 +21,6 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- *
  * @author Rsl1122
  */
 public class ChatListener implements Listener {
@@ -47,14 +48,14 @@ public class ChatListener implements Listener {
                     ColorScheme color = plugin.getColorScheme();
                     String mCol = color.getMainColor();
                     String sCol = color.getSecondaryColor();
-                    
+
                     String lampIDLine = item.getItemMeta().getLore().get(2);
                     UUID lampUUID = LampItem.getLampUUID(lampIDLine);
                     LampManager lampManager = plugin.getLampManager();
                     Lamp lamp = lampManager.getLamp(lampUUID);
                     Messages msg = plugin.getMsg();
-                    
-                    
+
+
                     String prefix = mCol + "[Genie] " + sCol;
                     if (!lamp.hasWishesLeft()) {
                         player.sendMessage(prefix + msg.getMessage(MessageType.OUT_OF_WISHES));
@@ -65,13 +66,15 @@ public class ChatListener implements Listener {
                     if (makeAWish(player, message)) {
                         lampManager.wish(lamp);
                         String wishesLeft = color.getTertiaryColor() + "" + lamp.getWishes() + sCol;
+
                         player.sendMessage(prefix + msg.getMessage(MessageType.WISHES_LEFT).replace("WISHES", wishesLeft));
+
+                        String fulfillMsg = mCol + "[Genie] " + ChatColor.GOLD + msg.getMessage(MessageType.FULFILL);
+
                         if (plugin.getConfig().getBoolean(Settings.ANNOUNCE_WISH_FULFILL.getPath())) {
-                            player.getServer().getOnlinePlayers().forEach(p -> {
-                                p.sendMessage(mCol + "[Genie] " + ChatColor.GOLD + msg.getMessage(MessageType.FULFILL));
-                            });
+                            player.getServer().getOnlinePlayers().forEach(p -> p.sendMessage(fulfillMsg));
                         } else {
-                            player.sendMessage(mCol + "[Genie] " + ChatColor.GOLD + plugin.getMsg().getMessage(MessageType.FULFILL));
+                            player.sendMessage(fulfillMsg);
                         }
                     } else {
                         player.sendMessage(prefix + plugin.getMsg().getMessage(MessageType.CANNOT_FIND));

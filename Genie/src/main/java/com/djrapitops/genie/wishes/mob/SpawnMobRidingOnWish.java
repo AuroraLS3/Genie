@@ -7,16 +7,15 @@ package com.djrapitops.genie.wishes.mob;
 
 import com.djrapitops.genie.utilities.FormatUtils;
 import com.djrapitops.genie.wishes.Wish;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Rsl1122
  */
 public class SpawnMobRidingOnWish extends Wish {
@@ -48,7 +47,11 @@ public class SpawnMobRidingOnWish extends Wish {
         Location aboveHead = p.getLocation().add(new Location(p.getWorld(), 0, 2, 0));
         Entity spawned = p.getWorld().spawnEntity(aboveHead, mobToSpawn);
         Entity toStack = p.getWorld().spawnEntity(aboveHead, mobToStack);
-        spawned.addPassenger(toStack);
+        try {
+            spawned.addPassenger(toStack);
+        } catch (NoSuchMethodError ex) {
+            spawned.setPassenger(toStack);
+        }
         return true;
     }
 }

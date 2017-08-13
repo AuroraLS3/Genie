@@ -1,13 +1,11 @@
 package com.djrapitops.genie.listeners;
 
-import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Settings;
-import com.djrapitops.genie.lamp.LampManager;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
+import com.djrapitops.plugin.utilities.version.EnumUtility;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -19,8 +17,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+import com.djrapitops.genie.Genie;
+import com.djrapitops.genie.Settings;
+import com.djrapitops.genie.lamp.LampManager;
+
 /**
- *
  * @author Rsl1122
  */
 public class DeathListener implements Listener {
@@ -39,17 +40,16 @@ public class DeathListener implements Listener {
         if (dead instanceof Player) {
             return;
         }
-        List<EntityType> nonHostiles = Arrays.asList(
-                EntityType.BAT, EntityType.CHICKEN, EntityType.COW,
-                EntityType.PIG, EntityType.SHEEP, EntityType.RABBIT,
-                EntityType.HORSE, EntityType.SQUID, EntityType.VILLAGER,
-                EntityType.MUSHROOM_COW, EntityType.POLAR_BEAR, EntityType.SKELETON_HORSE,
-                EntityType.DONKEY, EntityType.WOLF, EntityType.OCELOT,
-                EntityType.MULE, EntityType.LLAMA, EntityType.PARROT,
-                EntityType.IRON_GOLEM, EntityType.SNOWMAN);
-        if (nonHostiles.contains(dead.getType())) {
+
+        List<EntityType> nonHostile = EnumUtility.getSupportedEnumValues(EntityType.class,
+                "BAT", "CHICKEN", "COW", "PIG", "SHEEP", "RABBIT", "HORSE", "SQUID", "VILLAGER",
+                "MUSHROOM_COW", "POLAR_BEAR", "SKELETON_HORSE", "DONKEY", "WOLF", "OCELOT", "MULE",
+                "LLAMA", "PARROT", "IRON_GOLEM", "SNOWMAN");
+
+        if (nonHostile.contains(dead.getType())) {
             return;
         }
+
         Location loc = dead.getLocation();
         boolean recentlyDroppedHere = recentDrops.containsKey(loc);
         if (recentlyDroppedHere) {
