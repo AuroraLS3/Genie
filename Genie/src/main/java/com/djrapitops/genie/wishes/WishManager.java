@@ -181,13 +181,6 @@ public class WishManager {
         );
     }
 
-    public List<EntityType> getNonHostileEntities() {
-        return EnumUtility.getSupportedEnumValues(EntityType.class,
-        	"BAT","CHICKEN","COW","PIG","SHEEP","RABBIT","HORSE","SQUID","VILLAGER",
-        	"MUSHROOM_COW","POLAR_BEAR","SKELETON_HORSE","DONKEY","WOLF","OCELOT","MULE",
-        	"LLAMA","PARROT","IRON_GOLEM","SNOWMAN"
-        );
-    }
     public List<Material> getPreventedItems() {
         return EnumUtility.getSupportedEnumValues(Material.class,
                 "ACACIA_DOOR", "BEDROCK", "AIR",

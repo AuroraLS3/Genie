@@ -1,12 +1,15 @@
 package com.djrapitops.genie.listeners;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.djrapitops.plugin.utilities.version.EnumUtility;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,16 +23,14 @@ import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.genie.wishes.WishManager;
 
 /**
- *
  * @author Rsl1122
  */
 public class DeathListener implements Listener {
 
     private final Genie plugin;
     private Map<Location, Integer> recentDrops;
-    private WishManager wm;
+
     public DeathListener(Genie plugin) {
-    	wm = new WishManager(plugin);
         this.plugin = plugin;
         recentDrops = new HashMap<>();
     }
@@ -40,10 +41,16 @@ public class DeathListener implements Listener {
         if (dead instanceof Player) {
             return;
         }
-     
-        if (wm.getPreventedEntities().contains(dead.getType())|| wm.getNonHostileEntities().contains(dead.getType())) {
+
+        List<EntityType> nonHostile = EnumUtility.getSupportedEnumValues(EntityType.class,
+                "BAT", "CHICKEN", "COW", "PIG", "SHEEP", "RABBIT", "HORSE", "SQUID", "VILLAGER",
+                "MUSHROOM_COW", "POLAR_BEAR", "SKELETON_HORSE", "DONKEY", "WOLF", "OCELOT", "MULE",
+                "LLAMA", "PARROT", "IRON_GOLEM", "SNOWMAN");
+
+        if (nonHostile.contains(dead.getType())) {
             return;
         }
+
         Location loc = dead.getLocation();
         boolean recentlyDroppedHere = recentDrops.containsKey(loc);
         if (recentlyDroppedHere) {

@@ -27,16 +27,17 @@ public class LampItem extends ItemStack {
     }
 
     @SuppressWarnings("deprecation")
-	public LampItem(UUID lampID) {
+    public LampItem(UUID lampID) {
         super(Material.GOLD_INGOT);
 
         ItemMeta meta = this.getItemMeta();
-       
+
         try {
-        	meta.setUnbreakable(true);
-        }catch(NoSuchMethodError ex){
+            meta.setUnbreakable(true);
+        } catch (NoSuchMethodError ex) {
             meta.spigot().setUnbreakable(true);
         }
+
         meta.setDisplayName("" + ChatColor.RESET + ChatColor.GOLD + "Genie Lamp");
         meta.setLore(Arrays.asList(lore1, lore2, lore3start + getHiddenUUID(lampID)));
         setItemMeta(meta);
