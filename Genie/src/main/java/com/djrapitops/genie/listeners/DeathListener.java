@@ -20,7 +20,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import com.djrapitops.genie.Genie;
 import com.djrapitops.genie.Settings;
 import com.djrapitops.genie.lamp.LampManager;
-import com.djrapitops.genie.wishes.WishManager;
 
 /**
  * @author Rsl1122
