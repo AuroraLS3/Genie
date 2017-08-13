@@ -1,23 +1,23 @@
 package com.djrapitops.genie.listeners;
 
-import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Settings;
-import com.djrapitops.genie.lamp.LampManager;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+
+import com.djrapitops.genie.Genie;
+import com.djrapitops.genie.Settings;
+import com.djrapitops.genie.lamp.LampManager;
+import com.djrapitops.genie.wishes.WishManager;
 
 /**
  *
@@ -27,8 +27,9 @@ public class DeathListener implements Listener {
 
     private final Genie plugin;
     private Map<Location, Integer> recentDrops;
-
+    private WishManager wm;
     public DeathListener(Genie plugin) {
+    	wm = new WishManager(plugin);
         this.plugin = plugin;
         recentDrops = new HashMap<>();
     }
@@ -39,15 +40,8 @@ public class DeathListener implements Listener {
         if (dead instanceof Player) {
             return;
         }
-        List<EntityType> nonHostiles = Arrays.asList(
-                EntityType.BAT, EntityType.CHICKEN, EntityType.COW,
-                EntityType.PIG, EntityType.SHEEP, EntityType.RABBIT,
-                EntityType.HORSE, EntityType.SQUID, EntityType.VILLAGER,
-                EntityType.MUSHROOM_COW, EntityType.POLAR_BEAR, EntityType.SKELETON_HORSE,
-                EntityType.DONKEY, EntityType.WOLF, EntityType.OCELOT,
-                EntityType.MULE, EntityType.LLAMA, EntityType.PARROT,
-                EntityType.IRON_GOLEM, EntityType.SNOWMAN);
-        if (nonHostiles.contains(dead.getType())) {
+     
+        if (wm.getPreventedEntities().contains(dead.getType())|| wm.getNonHostileEntities().contains(dead.getType())) {
             return;
         }
         Location loc = dead.getLocation();

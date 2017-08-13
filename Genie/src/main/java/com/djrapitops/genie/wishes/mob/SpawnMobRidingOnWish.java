@@ -48,7 +48,11 @@ public class SpawnMobRidingOnWish extends Wish {
         Location aboveHead = p.getLocation().add(new Location(p.getWorld(), 0, 2, 0));
         Entity spawned = p.getWorld().spawnEntity(aboveHead, mobToSpawn);
         Entity toStack = p.getWorld().spawnEntity(aboveHead, mobToStack);
+        try {
         spawned.addPassenger(toStack);
+        }catch (NoSuchMethodError ex){
+        	spawned.setPassenger(toStack);
+        }
         return true;
     }
 }
