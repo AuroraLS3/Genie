@@ -1,7 +1,7 @@
 name: Genie
 author: Rsl1122
 main: com.djrapitops.genie.Genie
-version: 1.2.0
+version: 1.2.1
 
 commands:
     genie:
