@@ -12,8 +12,10 @@ import com.djrapitops.plugin.command.SubCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import static org.bukkit.Bukkit.getOnlinePlayers;
 import static org.bukkit.Bukkit.getPlayer;
 
 /**
@@ -67,16 +69,15 @@ public class GiveLampCommand extends SubCommand {
         if (args.length == 0 && CommandUtils.isPlayer(sender)) {
             receiver = (Player) sender.getSender();
         } else {
+            String name = args[0];
             UUID uuid = null;
             try {
-                uuid = UUIDFetcher.getUUIDOf(args[0]);
+                uuid = UUIDFetcher.getUUIDOf(name);
             } catch (Exception ignored) {
             }
             if (uuid == null) {
-                if (CommandUtils.isPlayer(sender)) {
-                    return (Player) sender.getSender();
-                }
-                return null;
+                Optional<? extends Player> found = getOnlinePlayers().stream().filter(player -> name.equals(player.getName())).findFirst();
+                return found.orElse(null);
             }
             receiver = getPlayer(uuid);
         }
