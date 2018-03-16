@@ -1,7 +1,6 @@
 package com.djrapitops.genie.wishes;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.genie.Settings;
 import com.djrapitops.genie.file.WishConfigSectionHandler;
 import com.djrapitops.genie.file.WishLog;
@@ -13,9 +12,11 @@ import com.djrapitops.genie.wishes.teleport.TeleportHereWish;
 import com.djrapitops.genie.wishes.teleport.TeleportToBedWish;
 import com.djrapitops.genie.wishes.teleport.TeleportToWish;
 import com.djrapitops.genie.wishes.world.*;
+import com.djrapitops.plugin.api.utility.EnumUtility;
+import com.djrapitops.plugin.api.utility.log.Log;
 import com.djrapitops.plugin.task.AbsRunnable;
+import com.djrapitops.plugin.task.RunnableFactory;
 import com.djrapitops.plugin.utilities.Verify;
-import com.djrapitops.plugin.utilities.version.EnumUtility;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -34,9 +35,6 @@ public class WishManager {
     private final WishLog log;
     private final WishConfigSectionHandler configSection;
 
-    /**
-     * @param plugin
-     */
     public WishManager(Genie plugin) {
         this.plugin = plugin;
         this.log = plugin.getWishLog();
@@ -79,7 +77,6 @@ public class WishManager {
             addWish(wish);
         }
         Log.info("Initialized with " + wishes.size() + " wishes");
-        plugin.processStatus().setStatus("Wishes", wishes.size() + "");
     }
 
     private void addCommandWishes(List<Wish> toAdd) {
@@ -157,13 +154,13 @@ public class WishManager {
         }
     }
 
-    public List<PotionEffectType> getPreventedPotions() {
+    private List<PotionEffectType> getPreventedPotions() {
         return EnumUtility.getSupportedEnumValues(PotionEffectType.class,
                 "WITHER", "HEAL"
         );
     }
 
-    public List<EntityType> getPreventedEntities() {
+    private List<EntityType> getPreventedEntities() {
         return EnumUtility.getSupportedEnumValues(EntityType.class,
                 "AREA_EFFECT_CLOUD", "ARMOR_STAND", "COMPLEX_PART",
                 "DRAGON_FIREBALL", "DROPPED_ITEM", "EGG",
@@ -181,7 +178,7 @@ public class WishManager {
         );
     }
 
-    public List<Material> getPreventedItems() {
+    private List<Material> getPreventedItems() {
         return EnumUtility.getSupportedEnumValues(Material.class,
                 "ACACIA_DOOR", "BEDROCK", "AIR",
                 "BED_BLOCK", "BEETROOT_BLOCK", "BIRCH_DOOR",
@@ -214,11 +211,6 @@ public class WishManager {
         }
     }
 
-    /**
-     * @param p
-     * @param wish
-     * @return Could the wish be fulfilled?
-     */
     public boolean wish(Player p, String wish) {
         log.madeAWish(p, wish);
         String[] parts = wish.split(" with ");
@@ -235,7 +227,7 @@ public class WishManager {
             i++;
         }
         if (!matches.isEmpty()) {
-            plugin.getRunnableFactory().createNew(new AbsRunnable("Wish Fulfillment Task") {
+            RunnableFactory.createNew(new AbsRunnable("Wish Fulfillment Task") {
                 @Override
                 public void run() {
                     try {
@@ -291,7 +283,7 @@ public class WishManager {
         }
     }
 
-    public String removeCommonWords(String wish) {
+    private String removeCommonWords(String wish) {
         String[] commonWords = new String[]{
                 "i", "you", "him", "her", "a", "the", "had", "wish", "get", "set",
                 "be", "of", "and", "in", "that", "have", "it", "for", "as", "do",

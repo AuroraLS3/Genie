@@ -2,13 +2,13 @@ package com.djrapitops.genie.wishes.mob;
 
 import com.djrapitops.genie.Genie;
 import com.djrapitops.genie.wishes.PlayerSpecificWish;
-import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
- *
  * @author Rsl1122
  */
 public class AssassinWish extends PlayerSpecificWish {

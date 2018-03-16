@@ -4,15 +4,19 @@ import com.djrapitops.genie.Genie;
 import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.genie.utilities.Check;
+import com.djrapitops.plugin.api.utility.UUIDFetcher;
 import com.djrapitops.plugin.command.CommandType;
 import com.djrapitops.plugin.command.CommandUtils;
 import com.djrapitops.plugin.command.ISender;
 import com.djrapitops.plugin.command.SubCommand;
-import com.djrapitops.plugin.utilities.player.UUIDFetcher;
-import java.util.UUID;
-import static org.bukkit.Bukkit.getPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.bukkit.Bukkit.getOnlinePlayers;
+import static org.bukkit.Bukkit.getPlayer;
 
 /**
  * Command used to give a player the lamp.
@@ -24,7 +28,7 @@ public class GiveLampCommand extends SubCommand {
     private final Genie plugin;
 
     public GiveLampCommand(Genie plugin) {
-        super("give, givelamp, lamp, g", CommandType.CONSOLE_WITH_ARGUMENTS, "genie.admin", "Gives the lamp to user or given player", "[player] [wishes]");
+        super("give, givelamp, lamp, g", CommandType.PLAYER_OR_ARGS, "genie.admin", "Gives the lamp to user or given player", "[player] [wishes]");
         this.plugin = plugin;
     }
 
@@ -34,16 +38,16 @@ public class GiveLampCommand extends SubCommand {
         final String lampDropped = ChatColor.GREEN + "[Genie] Lamp Dropped!";
 
         LampManager lampManager = plugin.getLampManager();
-        Player reciever = getReciever(args, sender);
+        Player receiver = getReceiver(args, sender);
 
-        if (!Check.isTrue(reciever != null, notFound, sender)) {
+        if (!Check.isTrue(receiver != null, notFound, sender)) {
             return true;
         }
 
         int wishes = getWishAmount(args);
         final LampItem newLamp = lampManager.newLamp(wishes);
 
-        lampManager.dropLamp(reciever.getLocation(), newLamp);
+        lampManager.dropLamp(receiver.getLocation(), newLamp);
         sender.sendMessage(lampDropped);
         return true;
     }
@@ -60,24 +64,23 @@ public class GiveLampCommand extends SubCommand {
         return wishes;
     }
 
-    private Player getReciever(String[] args, ISender sender) {
-        Player reciever;
+    private Player getReceiver(String[] args, ISender sender) {
+        Player receiver;
         if (args.length == 0 && CommandUtils.isPlayer(sender)) {
-            reciever = (Player) sender.getSender();
+            receiver = (Player) sender.getSender();
         } else {
+            String name = args[0];
             UUID uuid = null;
             try {
-                uuid = UUIDFetcher.getUUIDOf(args[0]);
+                uuid = UUIDFetcher.getUUIDOf(name);
             } catch (Exception ignored) {
             }
             if (uuid == null) {
-                if (CommandUtils.isPlayer(sender)) {
-                    return (Player) sender.getSender();
-                }
-                return null;
+                Optional<? extends Player> found = getOnlinePlayers().stream().filter(player -> name.equals(player.getName())).findFirst();
+                return found.orElse(null);
             }
-            reciever = getPlayer(uuid);
+            receiver = getPlayer(uuid);
         }
-        return reciever;
+        return receiver;
     }
 }

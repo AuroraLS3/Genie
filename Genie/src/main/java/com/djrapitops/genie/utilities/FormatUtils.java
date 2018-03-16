@@ -5,14 +5,14 @@
  */
 package com.djrapitops.genie.utilities;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- *
  * @author Risto
  */
 public class FormatUtils {

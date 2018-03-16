@@ -1,40 +1,29 @@
 package com.djrapitops.genie.file;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
-import com.djrapitops.plugin.config.BukkitConfig;
+import com.djrapitops.plugin.api.config.Config;
+import com.djrapitops.plugin.api.utility.log.Log;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * Class responsible for saving and loading lamp data.
  *
  * @author Rsl1122
  */
-public class UnfulfilledWishStorage extends BukkitConfig {
+public class UnfulfilledWishStorage extends Config {
 
     private final List<String> wishes;
 
-    public UnfulfilledWishStorage(Genie plugin) throws IOException, InvalidConfigurationException {
-        super(getStorageFolder(plugin), "unfulfilled");
-        FileConfiguration config = getConfig();
-        copyDefaults(config);
+    public UnfulfilledWishStorage(Genie plugin) {
+        super(new File(getStorageFolder(plugin), "unfulfilled.yml"), getDefaults());
         wishes = loadWishes();
         if (wishes.size() >= 250) {
-            Log.info("Genie/storage/unfulfilled.yml has "+wishes.size()+" unfulfilled wishes, please send them to the developer");
+            Log.info("Genie/storage/unfulfilled.yml has " + wishes.size() + " unfulfilled wishes, please send them to the developer");
         }
-    }
-
-    private void copyDefaults(FileConfiguration config) throws IOException {
-        List<String> defaults = new ArrayList<>();
-        defaults.add("Default");
-        config.addDefault("UnfulfilledWishes", defaults);
-        config.options().copyDefaults(true);
-        save();
     }
 
     private static File getStorageFolder(Genie plugin) {
@@ -55,13 +44,19 @@ public class UnfulfilledWishStorage extends BukkitConfig {
         }
     }
 
-    public final List<String> loadWishes() {
-        return getConfig().getStringList("UnfulfilledWishes");
+    private static List<String> getDefaults() {
+        List<String> defaults = new ArrayList<>();
+        defaults.add("UnfulfilledWishes:");
+        defaults.add("  - Default");
+        return defaults;
+    }
+
+    private List<String> loadWishes() {
+        return getStringList("UnfulfilledWishes");
     }
 
     private void saveWishes(List<String> wishes) throws IOException {
-        FileConfiguration config = getConfig();
-        config.set("UnfulfilledWishes", wishes);
+        set("UnfulfilledWishes", wishes);
         save();
     }
 }

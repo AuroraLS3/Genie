@@ -1,31 +1,24 @@
 package com.djrapitops.genie.file;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.plugin.config.BukkitConfig;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
+import com.djrapitops.plugin.api.config.Config;
+import com.djrapitops.plugin.api.config.ConfigNode;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MessageHandler extends BukkitConfig<Genie> {
+public class MessageHandler extends Config {
 
-    private File messageFile;
-    private FileConfiguration msgConfig;
-
-    public MessageHandler(Genie plugin) throws IOException, InvalidConfigurationException {
-        super(plugin, "messages.yml");
-        super.createFile();
-        FileConfiguration config = super.getConfig();
-        config.options().copyDefaults(true);
-        addDefaults(config);
-        save();
+    public MessageHandler(Genie plugin) {
+        super(new File(plugin.getDataFolder(), "messages.yml"), getDefaults());
     }
 
-    private void addDefaults(FileConfiguration config) {
+    private static List<String> getDefaults() {
+        List<String> defaults = new ArrayList<>();
+
+        defaults.add("Messages:");
+
         List<String> summonMsgList = new ArrayList<>();
         summonMsgList.add("Behold, you have summoned me, Genie!");
         summonMsgList.add("Behold, I am the Genie of the lamp!");
@@ -43,7 +36,10 @@ public class MessageHandler extends BukkitConfig<Genie> {
         summonMsgList.add("KAZAAM!");
         summonMsgList.add("Alright Sparky, here's the deal.");
         summonMsgList.add("Poof! Waddya need?");
-        config.addDefault("Messages.Summon-Messages", summonMsgList);
+        defaults.add("  Summon-Messages:");
+        for (String s : summonMsgList) {
+            defaults.add("  - " + s);
+        }
 
         List<String> fulfillMsgList = new ArrayList<>();
         fulfillMsgList.add("Your word is my command!");
@@ -56,7 +52,10 @@ public class MessageHandler extends BukkitConfig<Genie> {
         fulfillMsgList.add("How about this, do you think it'll do?");
         fulfillMsgList.add("Maybe you want this and don't know it yet.");
         fulfillMsgList.add("Applause please!");
-        config.addDefault("Messages.Fulfill-Messages", fulfillMsgList);
+        defaults.add("  Fulfill-Messages:");
+        for (String s : fulfillMsgList) {
+            defaults.add("  - " + s);
+        }
 
         List<String> helpMsgList = new ArrayList<>();
         helpMsgList.add("Hold the lamp & speak your wish!");
@@ -69,7 +68,10 @@ public class MessageHandler extends BukkitConfig<Genie> {
         helpMsgList.add("Bla bla bla.");
         helpMsgList.add("Speak your mind, release your wish.");
         helpMsgList.add("You only had to rub the lamp, but I appreciate you going the extra mile.");
-        config.addDefault("Messages.Help-Messages", helpMsgList);
+        defaults.add("  Help-Messages:");
+        for (String s : helpMsgList) {
+            defaults.add("  - " + s);
+        }
 
         List<String> wishesRemainingMsgList = new ArrayList<>();
         wishesRemainingMsgList.add("You have WISHES wishes left.");
@@ -80,7 +82,10 @@ public class MessageHandler extends BukkitConfig<Genie> {
         wishesRemainingMsgList.add("You still got WISHES wishes left.");
         wishesRemainingMsgList.add("I can grant you WISHES wishes.");
         wishesRemainingMsgList.add("WISHES wishes left.");
-        config.addDefault("Messages.Wishes-Remaining-Messages", wishesRemainingMsgList);
+        defaults.add("  Wishes-Remaining-Messages:");
+        for (String s : wishesRemainingMsgList) {
+            defaults.add("  - " + s);
+        }
 
         List<String> noWishesLeftMsgList = new ArrayList<>();
         noWishesLeftMsgList.add("No wishes left.");
@@ -93,7 +98,10 @@ public class MessageHandler extends BukkitConfig<Genie> {
         noWishesLeftMsgList.add("0 wishes left.");
         noWishesLeftMsgList.add("That was your last wish.");
         noWishesLeftMsgList.add("Excuse me, I am in the shower. I think you used your wishes already.");
-        config.addDefault("Messages.Out-Of-Wishes-Messages", noWishesLeftMsgList);
+        defaults.add("  Out-Of-Wishes-Messages:");
+        for (String s : noWishesLeftMsgList) {
+            defaults.add("  - " + s);
+        }
 
         List<String> cannotFulfillMsgList = new ArrayList<>();
         cannotFulfillMsgList.add("Gadzooks! I don't think that can be done, have another try.");
@@ -102,40 +110,45 @@ public class MessageHandler extends BukkitConfig<Genie> {
         cannotFulfillMsgList.add("Could you think of something less impossible?");
         cannotFulfillMsgList.add("That may be beyond my capabilities");
         cannotFulfillMsgList.add("Please ask for the dev to add that to my abilities. ");
-        config.addDefault("Messages.Cannot-Fulfill-Messages", cannotFulfillMsgList);
+        defaults.add("  Cannot-Fulfill-Messages:");
+        for (String s : cannotFulfillMsgList) {
+            defaults.add("  - " + s);
+        }
+
+        return defaults;
     }
 
-    private ConfigurationSection getMessagesSection() {
-        return getConfig().getConfigurationSection("Messages");
+    private ConfigNode getMessagesSection() {
+        return getConfigNode("Messages");
     }
 
     public List<String> getSummonMessages() {
-        ConfigurationSection section = getMessagesSection();
+        ConfigNode section = getMessagesSection();
         return new ArrayList<>(section.getStringList("Summon-Messages"));
     }
 
     public List<String> getFulfillMessages() {
-        ConfigurationSection section = getMessagesSection();
+        ConfigNode section = getMessagesSection();
         return new ArrayList<>(section.getStringList("Fulfill-Messages"));
     }
 
     public List<String> getHelpMessages() {
-        ConfigurationSection section = getMessagesSection();
+        ConfigNode section = getMessagesSection();
         return new ArrayList<>(section.getStringList("Help-Messages"));
     }
 
     public List<String> getNoWishesMessages() {
-        ConfigurationSection section = getMessagesSection();
+        ConfigNode section = getMessagesSection();
         return new ArrayList<>(section.getStringList("Out-Of-Wishes-Messages"));
     }
 
     public List<String> getCannotFulfillMessages() {
-        ConfigurationSection section = getMessagesSection();
+        ConfigNode section = getMessagesSection();
         return new ArrayList<>(section.getStringList("Cannot-Fulfill-Messages"));
     }
 
     public List<String> getWishesLeftMessages() {
-        ConfigurationSection section = getMessagesSection();
+        ConfigNode section = getMessagesSection();
         return new ArrayList<>(section.getStringList("Wishes-Remaining-Messages"));
     }
 }

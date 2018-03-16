@@ -1,13 +1,13 @@
 package com.djrapitops.genie.wishes.mob;
 
 import com.djrapitops.genie.wishes.Wish;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Rsl1122
  */
 public class AnimalWish extends Wish {
@@ -32,10 +32,10 @@ public class AnimalWish extends Wish {
 
     private void addWishes() {
         EntityType[] e = new EntityType[]{
-            EntityType.COW,
-            EntityType.CHICKEN,
-            EntityType.PIG,
-            EntityType.SHEEP};
+                EntityType.COW,
+                EntityType.CHICKEN,
+                EntityType.PIG,
+                EntityType.SHEEP};
         for (EntityType farmAnimal : e) {
             mobWishes.add(new SpawnMobWish(farmAnimal));
         }

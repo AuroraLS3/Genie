@@ -5,21 +5,22 @@
  */
 package com.djrapitops.genie.wishes;
 
+import org.bukkit.entity.Player;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
 import static org.bukkit.Bukkit.getOnlinePlayers;
-import org.bukkit.entity.Player;
 
 /**
- *
  * @author Risto
  */
 public abstract class PlayerSpecificWish extends Wish {
 
-    protected Map<UUID, UUID> storage;
+    protected final Map<UUID, UUID> storage;
 
-    public PlayerSpecificWish(String... name) {
+    protected PlayerSpecificWish(String... name) {
         super(name);
         storage = new HashMap<>();
     }

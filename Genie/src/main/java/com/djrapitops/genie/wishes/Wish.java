@@ -1,8 +1,8 @@
 package com.djrapitops.genie.wishes;
 
-import static org.bukkit.Bukkit.getOnlinePlayers;
-
 import org.bukkit.entity.Player;
+
+import static org.bukkit.Bukkit.getOnlinePlayers;
 
 /**
  * Abstract class representing a possible wish.
@@ -13,7 +13,7 @@ public abstract class Wish {
 
     private final String[] aliases;
 
-    public Wish(String... name) {
+    protected Wish(String... name) {
         this.aliases = new String[name.length];
         for (int i = 0; i < name.length; i++) {
             aliases[i] = name[i].toLowerCase().trim();
@@ -31,23 +31,23 @@ public abstract class Wish {
     }
 
     public String getBestMatch(String wish) {
-        double perc = 2.0;
+        double percentage = 2.0;
         String bestMatch = "";
         for (String alias : aliases) {
             if (alias.contains("{playername}")) {
                 for (Player p : getOnlinePlayers()) {
                     String aliasWPlayerName = alias.replace("{playername}", p.getName().toLowerCase());
-                    double aliasPerc = getRelativeDiffPercentage(aliasWPlayerName, wish);
-                    if (aliasPerc < perc) {
+                    double aliasPercentage = getRelativeDiffPercentage(aliasWPlayerName, wish);
+                    if (aliasPercentage < percentage) {
                         bestMatch = aliasWPlayerName;
-                        perc = aliasPerc;
+                        percentage = aliasPercentage;
                     }
                 }
             } else {
-                double aliasPerc = getRelativeDiffPercentage(alias, wish);
-                if (aliasPerc < perc) {
+                double aliasPercentage = getRelativeDiffPercentage(alias, wish);
+                if (aliasPercentage < percentage) {
                     bestMatch = alias;
-                    perc = aliasPerc;
+                    percentage = aliasPercentage;
                 }
             }
         }

@@ -11,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author Rsl1122
  */
 public class TeleportToBedWish extends Wish {

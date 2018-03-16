@@ -1,12 +1,12 @@
 package com.djrapitops.genie.lamp;
 
-import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.genie.file.LampStorage;
+import com.djrapitops.plugin.api.utility.log.Log;
+import org.bukkit.Location;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
-import org.bukkit.Location;
 
 /**
  * Class for each lamp in the world.
@@ -15,12 +15,10 @@ import org.bukkit.Location;
  */
 public class LampManager {
 
-    private final Genie plugin;
     private final LampStorage store;
     private final Map<UUID, Lamp> lamps;
 
-    public LampManager(Genie plugin, LampStorage store) {
-        this.plugin = plugin;
+    public LampManager(LampStorage store) {
         this.store = store;
         lamps = store.loadLamps();
     }

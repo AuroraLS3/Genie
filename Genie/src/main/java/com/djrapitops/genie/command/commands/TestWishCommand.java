@@ -21,7 +21,7 @@ public class TestWishCommand extends SubCommand {
     private final Genie plugin;
 
     public TestWishCommand(Genie plugin) {
-        super("test, check, testwish", CommandType.CONSOLE_WITH_ARGUMENTS, "genie.admin", "Test a wish", "<wish>");
+        super("test, check, testwish", CommandType.ALL_WITH_ARGS, "genie.admin", "Test a wish", "<wish>");
         this.plugin = plugin;
     }
 

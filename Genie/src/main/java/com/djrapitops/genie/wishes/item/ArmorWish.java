@@ -6,13 +6,13 @@
 package com.djrapitops.genie.wishes.item;
 
 import com.djrapitops.genie.wishes.Wish;
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- *
  * @author Rsl1122
  */
 public class ArmorWish extends Wish {
