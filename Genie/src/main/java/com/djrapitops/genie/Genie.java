@@ -20,7 +20,6 @@ import com.djrapitops.plugin.utilities.Verify;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.configuration.InvalidConfigurationException;
 
 import java.io.IOException;
 import java.util.List;
@@ -74,9 +73,9 @@ public class Genie extends BukkitPlugin {
         try {
             LampStorage lampStorage = new LampStorage(this);
             unfulfilledWishStore = new UnfulfilledWishStorage(this);
-            lampManager = new LampManager(this, lampStorage);
+            lampManager = new LampManager(lampStorage);
             Verify.nullCheck(wishLog, wishManager, messages, lampManager, worldBlacklist);
-        } catch (NullPointerException | IOException | InvalidConfigurationException ex) {
+        } catch (Exception ex) {
             Log.error("Plugin initialization has failed, disabling plugin.");
             Log.toLog(this.getClass().getName(), ex);
             onDisable();

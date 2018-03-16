@@ -9,6 +9,7 @@ import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.task.AbsRunnable;
+import com.djrapitops.plugin.task.RunnableFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,11 +37,11 @@ public class ChatListener implements Listener {
         if (!plugin.isWorldAllowed(player.getWorld())) {
             return;
         }
-        ItemStack item = getItemInhand(player);
+        ItemStack item = getItemInHand(player);
         if (item == null || !LampItem.isLampItem(item)) {
             return;
         }
-        plugin.getRunnableFactory().createNew(new AbsRunnable("Wish Event") {
+        RunnableFactory.createNew(new AbsRunnable("Wish Event") {
             @Override
             public void run() {
                 try {
@@ -87,7 +88,7 @@ public class ChatListener implements Listener {
     }
 
     @SuppressWarnings("deprecation")
-    private ItemStack getItemInhand(Player player) {
+    private ItemStack getItemInHand(Player player) {
         ItemStack item = null;
         try {
             item = player.getInventory().getItemInMainHand();

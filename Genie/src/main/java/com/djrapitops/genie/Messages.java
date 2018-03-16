@@ -14,7 +14,7 @@ public class Messages {
 
     private final Map<MessageType, List<String>> messages;
     private final Random random;
-    private MessageHandler msgHandler;
+    private final MessageHandler msgHandler;
 
     public Messages() {
         messages = new HashMap<>();
@@ -35,7 +35,7 @@ public class Messages {
         return random.nextInt(bound);
     }
 
-    public void addMsg(MessageType type, String msg) {
+    private void addMsg(MessageType type, String msg) {
         messages.get(type).add(msg);
     }
 

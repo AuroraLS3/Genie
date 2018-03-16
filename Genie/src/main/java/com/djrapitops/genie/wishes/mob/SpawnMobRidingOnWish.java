@@ -42,6 +42,7 @@ public class SpawnMobRidingOnWish extends Wish {
         return names.toArray(new String[names.size()]);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean fulfillWish(Player p) {
         Location aboveHead = p.getLocation().add(new Location(p.getWorld(), 0, 2, 0));

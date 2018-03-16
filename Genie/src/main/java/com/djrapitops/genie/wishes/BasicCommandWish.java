@@ -2,6 +2,7 @@ package com.djrapitops.genie.wishes;
 
 import com.djrapitops.genie.Genie;
 import com.djrapitops.plugin.api.Priority;
+import com.djrapitops.plugin.api.systems.NotificationCenter;
 import com.djrapitops.plugin.api.utility.log.Log;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -24,7 +25,7 @@ public class BasicCommandWish extends Wish {
         boolean executeSuccess = server.dispatchCommand(server.getConsoleSender(), command);
         if (!executeSuccess) {
             String message = "Command may be incorrectly set up: " + this.command;
-            plugin.getNotificationCenter().addNotification(Priority.LOW, message);
+            NotificationCenter.addNotification(Priority.LOW, message);
             Log.error(message);
         }
         return executeSuccess;

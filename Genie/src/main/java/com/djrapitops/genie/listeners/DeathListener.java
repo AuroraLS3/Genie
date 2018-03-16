@@ -26,7 +26,7 @@ import java.util.Random;
 public class DeathListener implements Listener {
 
     private final Genie plugin;
-    private Map<Location, Integer> recentDrops;
+    private final Map<Location, Integer> recentDrops;
 
     public DeathListener(Genie plugin) {
         this.plugin = plugin;
@@ -81,9 +81,7 @@ public class DeathListener implements Listener {
                 break;
         }
         if (dropped) {
-            if (!recentlyDroppedHere) {
-                recentDrops.put(loc, 1);
-            }
+            recentDrops.put(loc, 1);
         }
     }
 }

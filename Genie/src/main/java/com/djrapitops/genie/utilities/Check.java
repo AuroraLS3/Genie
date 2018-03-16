@@ -1,6 +1,5 @@
 package com.djrapitops.genie.utilities;
 
-import com.djrapitops.plugin.api.utility.log.Log;
 import com.djrapitops.plugin.command.ISender;
 
 /**
@@ -10,20 +9,6 @@ import com.djrapitops.plugin.command.ISender;
  * @author Rsl1122
  */
 public class Check {
-
-    /**
-     * If check is false, send message.
-     *
-     * @param condition Condition.
-     * @param message   Message to send if Condition is false
-     * @return Condition
-     */
-    public static boolean isTrue(boolean condition, String message) {
-        if (!condition) {
-            Log.infoColor(message);
-        }
-        return condition;
-    }
 
     /**
      * If check is false, send message to sender.

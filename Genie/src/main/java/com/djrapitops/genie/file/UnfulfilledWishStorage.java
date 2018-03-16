@@ -51,7 +51,7 @@ public class UnfulfilledWishStorage extends Config {
         return defaults;
     }
 
-    public final List<String> loadWishes() {
+    private List<String> loadWishes() {
         return getStringList("UnfulfilledWishes");
     }
 

@@ -19,11 +19,11 @@ import java.util.List;
 /**
  * @author Rsl1122
  */
-public class WishlogCommand extends SubCommand {
+public class WishLogCommand extends SubCommand {
 
     private final Genie plugin;
 
-    public WishlogCommand(Genie plugin) {
+    public WishLogCommand(Genie plugin) {
         super("wishlog, log, wl", CommandType.PLAYER_OR_ARGS, "genie.admin", "See all wishes made by a player", "<playername>");
         this.plugin = plugin;
     }
@@ -43,7 +43,7 @@ public class WishlogCommand extends SubCommand {
 
         WishLog wishLog = plugin.getWishLog();
         plugin.getRunnableFactory();
-        RunnableFactory.createNew(new AbsRunnable("Wishlog read task") {
+        RunnableFactory.createNew(new AbsRunnable("WishLog read task") {
             @Override
             public void run() {
                 List<String> wishes = null;

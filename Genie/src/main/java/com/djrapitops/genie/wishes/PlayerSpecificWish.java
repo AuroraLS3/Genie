@@ -18,9 +18,9 @@ import static org.bukkit.Bukkit.getOnlinePlayers;
  */
 public abstract class PlayerSpecificWish extends Wish {
 
-    protected Map<UUID, UUID> storage;
+    protected final Map<UUID, UUID> storage;
 
-    public PlayerSpecificWish(String... name) {
+    protected PlayerSpecificWish(String... name) {
         super(name);
         storage = new HashMap<>();
     }

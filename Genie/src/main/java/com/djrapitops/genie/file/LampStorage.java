@@ -5,11 +5,9 @@ import com.djrapitops.genie.lamp.Lamp;
 import com.djrapitops.plugin.api.config.Config;
 import com.djrapitops.plugin.api.config.ConfigNode;
 import com.djrapitops.plugin.api.utility.log.Log;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -29,14 +27,6 @@ public class LampStorage extends Config {
         File storage = new File(plugin.getDataFolder(), "storage");
         storage.mkdirs();
         return storage;
-    }
-
-    private void copyDefaults(FileConfiguration config) throws IOException {
-        HashMap<String, Serializable> map = new HashMap<>();
-        map.put(UUID.randomUUID().toString(), new HashMap<>());
-        config.addDefault("Lamps", map);
-        config.options().copyDefaults(true);
-        save();
     }
 
     public void addLamp(Lamp lamp) {

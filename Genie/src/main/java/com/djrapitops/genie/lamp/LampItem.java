@@ -15,9 +15,9 @@ import java.util.UUID;
  */
 public class LampItem extends ItemStack {
 
-    private final String lore1 = ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Hold to make a wish";
-    private final String lore2 = ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Rub to summon Genie";
-    private final String lore3start = ChatColor.RESET + "" + ChatColor.COLOR_CHAR + ":";
+    private static final String LORE_1 = ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Hold to make a wish";
+    private static final String LORE_2 = ChatColor.RESET + "" + ChatColor.DARK_AQUA + "Rub to summon Genie";
+    private static final String LORE_3_START = ChatColor.RESET + "" + ChatColor.COLOR_CHAR + ":";
 
     /**
      * Used to get a empty LampItem for the variables above.
@@ -39,22 +39,19 @@ public class LampItem extends ItemStack {
         }
 
         meta.setDisplayName("" + ChatColor.RESET + ChatColor.GOLD + "Genie Lamp");
-        meta.setLore(Arrays.asList(lore1, lore2, lore3start + getHiddenUUID(lampID)));
+        meta.setLore(Arrays.asList(LORE_1, LORE_2, LORE_3_START + getHiddenUUID(lampID)));
         setItemMeta(meta);
         super.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 1);
     }
 
     public static boolean isLampItem(ItemStack item) {
-        LampItem lampVariables = new LampItem();
-        String lore1 = lampVariables.lore1;
-        String lore2 = lampVariables.lore2;
         return item != null
                 && item.getEnchantments().get(Enchantment.PROTECTION_FALL) != null
                 && item.hasItemMeta()
                 && item.getItemMeta().hasLore()
                 && item.getItemMeta().getLore().size() >= 3
-                && lore1.equals(item.getItemMeta().getLore().get(0))
-                && lore2.equals(item.getItemMeta().getLore().get(1))
+                && LORE_1.equals(item.getItemMeta().getLore().get(0))
+                && LORE_2.equals(item.getItemMeta().getLore().get(1))
                 && item.getItemMeta().getLore().get(2) != null;
     }
 

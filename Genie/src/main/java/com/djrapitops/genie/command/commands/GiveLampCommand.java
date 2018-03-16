@@ -36,16 +36,16 @@ public class GiveLampCommand extends SubCommand {
         final String lampDropped = ChatColor.GREEN + "[Genie] Lamp Dropped!";
 
         LampManager lampManager = plugin.getLampManager();
-        Player reciever = getReciever(args, sender);
+        Player receiver = getReceiver(args, sender);
 
-        if (!Check.isTrue(reciever != null, notFound, sender)) {
+        if (!Check.isTrue(receiver != null, notFound, sender)) {
             return true;
         }
 
         int wishes = getWishAmount(args);
         final LampItem newLamp = lampManager.newLamp(wishes);
 
-        lampManager.dropLamp(reciever.getLocation(), newLamp);
+        lampManager.dropLamp(receiver.getLocation(), newLamp);
         sender.sendMessage(lampDropped);
         return true;
     }
@@ -62,10 +62,10 @@ public class GiveLampCommand extends SubCommand {
         return wishes;
     }
 
-    private Player getReciever(String[] args, ISender sender) {
-        Player reciever;
+    private Player getReceiver(String[] args, ISender sender) {
+        Player receiver;
         if (args.length == 0 && CommandUtils.isPlayer(sender)) {
-            reciever = (Player) sender.getSender();
+            receiver = (Player) sender.getSender();
         } else {
             UUID uuid = null;
             try {
@@ -78,8 +78,8 @@ public class GiveLampCommand extends SubCommand {
                 }
                 return null;
             }
-            reciever = getPlayer(uuid);
+            receiver = getPlayer(uuid);
         }
-        return reciever;
+        return receiver;
     }
 }

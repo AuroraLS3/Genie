@@ -35,9 +35,6 @@ public class WishManager {
     private final WishLog log;
     private final WishConfigSectionHandler configSection;
 
-    /**
-     * @param plugin
-     */
     public WishManager(Genie plugin) {
         this.plugin = plugin;
         this.log = plugin.getWishLog();
@@ -157,13 +154,13 @@ public class WishManager {
         }
     }
 
-    public List<PotionEffectType> getPreventedPotions() {
+    private List<PotionEffectType> getPreventedPotions() {
         return EnumUtility.getSupportedEnumValues(PotionEffectType.class,
                 "WITHER", "HEAL"
         );
     }
 
-    public List<EntityType> getPreventedEntities() {
+    private List<EntityType> getPreventedEntities() {
         return EnumUtility.getSupportedEnumValues(EntityType.class,
                 "AREA_EFFECT_CLOUD", "ARMOR_STAND", "COMPLEX_PART",
                 "DRAGON_FIREBALL", "DROPPED_ITEM", "EGG",
@@ -181,7 +178,7 @@ public class WishManager {
         );
     }
 
-    public List<Material> getPreventedItems() {
+    private List<Material> getPreventedItems() {
         return EnumUtility.getSupportedEnumValues(Material.class,
                 "ACACIA_DOOR", "BEDROCK", "AIR",
                 "BED_BLOCK", "BEETROOT_BLOCK", "BIRCH_DOOR",
@@ -214,11 +211,6 @@ public class WishManager {
         }
     }
 
-    /**
-     * @param p
-     * @param wish
-     * @return Could the wish be fulfilled?
-     */
     public boolean wish(Player p, String wish) {
         log.madeAWish(p, wish);
         String[] parts = wish.split(" with ");
@@ -291,7 +283,7 @@ public class WishManager {
         }
     }
 
-    public String removeCommonWords(String wish) {
+    private String removeCommonWords(String wish) {
         String[] commonWords = new String[]{
                 "i", "you", "him", "her", "a", "the", "had", "wish", "get", "set",
                 "be", "of", "and", "in", "that", "have", "it", "for", "as", "do",

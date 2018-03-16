@@ -8,6 +8,7 @@ import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.task.AbsRunnable;
+import com.djrapitops.plugin.task.RunnableFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -40,7 +41,7 @@ public class ItemInteractionListener implements Listener {
             return;
         }
         Player player = event.getPlayer();
-        plugin.getRunnableFactory().createNew(new AbsRunnable("Lamp Wish Count Check Event") {
+        RunnableFactory.createNew(new AbsRunnable("Lamp Wish Count Check Event") {
             @Override
             public void run() {
                 try {
