@@ -4,15 +4,17 @@ import com.djrapitops.genie.Genie;
 import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.genie.utilities.Check;
+import com.djrapitops.plugin.api.utility.UUIDFetcher;
 import com.djrapitops.plugin.command.CommandType;
 import com.djrapitops.plugin.command.CommandUtils;
 import com.djrapitops.plugin.command.ISender;
 import com.djrapitops.plugin.command.SubCommand;
-import com.djrapitops.plugin.utilities.player.UUIDFetcher;
-import java.util.UUID;
-import static org.bukkit.Bukkit.getPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.UUID;
+
+import static org.bukkit.Bukkit.getPlayer;
 
 /**
  * Command used to give a player the lamp.
@@ -24,7 +26,7 @@ public class GiveLampCommand extends SubCommand {
     private final Genie plugin;
 
     public GiveLampCommand(Genie plugin) {
-        super("give, givelamp, lamp, g", CommandType.CONSOLE_WITH_ARGUMENTS, "genie.admin", "Gives the lamp to user or given player", "[player] [wishes]");
+        super("give, givelamp, lamp, g", CommandType.PLAYER_OR_ARGS, "genie.admin", "Gives the lamp to user or given player", "[player] [wishes]");
         this.plugin = plugin;
     }
 

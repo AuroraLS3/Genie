@@ -9,7 +9,6 @@ import com.djrapitops.genie.wishes.Wish;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author Rsl1122
  */
 public class ThunderWish extends Wish {

@@ -1,7 +1,6 @@
 package com.djrapitops.genie.wishes;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.genie.Settings;
 import com.djrapitops.genie.file.WishConfigSectionHandler;
 import com.djrapitops.genie.file.WishLog;
@@ -13,9 +12,11 @@ import com.djrapitops.genie.wishes.teleport.TeleportHereWish;
 import com.djrapitops.genie.wishes.teleport.TeleportToBedWish;
 import com.djrapitops.genie.wishes.teleport.TeleportToWish;
 import com.djrapitops.genie.wishes.world.*;
+import com.djrapitops.plugin.api.utility.EnumUtility;
+import com.djrapitops.plugin.api.utility.log.Log;
 import com.djrapitops.plugin.task.AbsRunnable;
+import com.djrapitops.plugin.task.RunnableFactory;
 import com.djrapitops.plugin.utilities.Verify;
-import com.djrapitops.plugin.utilities.version.EnumUtility;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -79,7 +80,6 @@ public class WishManager {
             addWish(wish);
         }
         Log.info("Initialized with " + wishes.size() + " wishes");
-        plugin.processStatus().setStatus("Wishes", wishes.size() + "");
     }
 
     private void addCommandWishes(List<Wish> toAdd) {
@@ -235,7 +235,7 @@ public class WishManager {
             i++;
         }
         if (!matches.isEmpty()) {
-            plugin.getRunnableFactory().createNew(new AbsRunnable("Wish Fulfillment Task") {
+            RunnableFactory.createNew(new AbsRunnable("Wish Fulfillment Task") {
                 @Override
                 public void run() {
                     try {

@@ -1,14 +1,8 @@
 package com.djrapitops.genie;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
 import com.djrapitops.genie.file.MessageHandler;
-import org.bukkit.configuration.InvalidConfigurationException;
+
+import java.util.*;
 
 /**
  * Class that contains message parts and variations to make genie more live
@@ -27,12 +21,7 @@ public class Messages {
         for (MessageType type : MessageType.values()) {
             messages.put(type, new ArrayList<>());
         }
-        try {
-            msgHandler = new MessageHandler(Genie.getInstance());
-        } catch (IOException | InvalidConfigurationException e) {
-            Log.error("Failed to initialize Messages.");
-            Log.toLog(this.getClass().getName(), e);
-        }
+        msgHandler = new MessageHandler(Genie.getInstance());
         random = new Random();
         addMessages();
     }
@@ -49,7 +38,6 @@ public class Messages {
     public void addMsg(MessageType type, String msg) {
         messages.get(type).add(msg);
     }
-
 
     private void addMessages() {
         for (String sm : msgHandler.getSummonMessages()) {

@@ -1,31 +1,34 @@
 package com.djrapitops.genie.file;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.genie.lamp.Lamp;
-import com.djrapitops.plugin.config.BukkitConfig;
+import com.djrapitops.plugin.api.config.Config;
+import com.djrapitops.plugin.api.config.ConfigNode;
+import com.djrapitops.plugin.api.utility.log.Log;
+import org.bukkit.configuration.file.FileConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
 
 /**
  * Class responsible for saving and loading lamp data.
  *
  * @author Rsl1122
  */
-public class LampStorage extends BukkitConfig {
+public class LampStorage extends Config {
 
-    public LampStorage(Genie plugin) throws IOException, InvalidConfigurationException {
-        super(getStorageFolder(plugin), "lamps");
-        FileConfiguration config = getConfig();
-        copyDefaults(config);
+    public LampStorage(Genie plugin) {
+        super(new File(getStorageFolder(plugin), "lamps.yml"));
+    }
+
+    private static File getStorageFolder(Genie plugin) {
+        File storage = new File(plugin.getDataFolder(), "storage");
+        storage.mkdirs();
+        return storage;
     }
 
     private void copyDefaults(FileConfiguration config) throws IOException {
@@ -36,29 +39,10 @@ public class LampStorage extends BukkitConfig {
         save();
     }
 
-    private static File getStorageFolder(Genie plugin) {
-        File storage = new File(plugin.getDataFolder(), "storage");
-        storage.mkdirs();
-        return storage;
-    }
-
     public void addLamp(Lamp lamp) {
         try {
-            FileConfiguration config = getConfig();
-            ConfigurationSection lampsC = config.getConfigurationSection("Lamps");
-            
-            Map<String, Serializable> values = new HashMap<>();
-            values.put("wishes", lamp.getWishes());
-            
             String lampIDString = lamp.getLampID().toString();
-            
-            if (lampsC == null) {
-                config.set("Lamps." + lampIDString, values);
-            } else {
-                lampsC.set(lampIDString, values);
-                config.set("Lamps", lampsC);
-            }
-            
+            set("Lamps." + lampIDString + ".wishes", lamp.getWishes());
             save();
         } catch (IOException ex) {
             Log.toLog(this.getClass().getName(), ex);
@@ -66,25 +50,20 @@ public class LampStorage extends BukkitConfig {
     }
 
     public Map<UUID, Lamp> loadLamps() {
-        FileConfiguration config = getConfig();
-        ConfigurationSection lampsC = config.getConfigurationSection("Lamps");
         Map<UUID, Lamp> lamps = new HashMap<>();
-        
-        if (lampsC != null) {
-            Set<String> keys = lampsC.getKeys(false);
-            for (String key : keys) {
-                int wishes = lampsC.getInt(key + ".wishes");
-                UUID lampId = UUID.fromString(key);
-                lamps.put(lampId, new Lamp(lampId, wishes));
-            }
+
+        ConfigNode lampsSection = getConfigNode("Lamps");
+        for (String key : lampsSection.getKeysInOrder()) {
+            int wishes = lampsSection.getInt(key + ".wishes");
+            UUID lampId = UUID.fromString(key);
+            lamps.put(lampId, new Lamp(lampId, wishes));
         }
-        
+
         return lamps;
     }
 
     public void wishUsed(Lamp lamp) throws IOException {
-        FileConfiguration config = getConfig();
-        config.set("Lamps." + lamp.getLampID().toString() + ".wishes", lamp.getWishes());
+        set("Lamps." + lamp.getLampID().toString() + ".wishes", lamp.getWishes());
         save();
     }
 

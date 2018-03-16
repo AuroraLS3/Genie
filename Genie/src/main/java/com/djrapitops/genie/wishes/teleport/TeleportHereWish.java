@@ -6,12 +6,12 @@
 package com.djrapitops.genie.wishes.teleport;
 
 import com.djrapitops.genie.wishes.PlayerSpecificWish;
-import java.util.UUID;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 /**
- *
  * @author Rsl1122
  */
 public class TeleportHereWish extends PlayerSpecificWish {

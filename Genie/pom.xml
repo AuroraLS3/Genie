@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.djrapitops</groupId>
     <artifactId>Genie</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -12,28 +12,41 @@
     </properties>
     <repositories>
         <repository>
-            <id>plan-repo</id>
-            <url>http://repo.fuzzlemann.de/artifactory/libs-release/</url>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>plan-snapshot-repo</id>
-            <url>http://repo.fuzzlemann.de/artifactory/libs-snapshot/</url>
+            <id>paper-repo</id>
+            <url>https://repo.destroystokyo.com/repository/maven-public/</url>
         </repository>
     </repositories>
     <dependencies>
-        <!--        PaperSpigot 1.12 built with Buildtools for Database classes.-->
+        <!--        Paper API -->
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>
-            <artifactId>paper</artifactId>
-            <version>1.12-R0.1-20170725.202533-1</version>
+            <artifactId>paper-api</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--        Spigot API -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.12-R0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>bukkit</artifactId>
+            <version>1.12.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--        Framework for easier plugin development-->
         <dependency>
             <groupId>com.djrapitops</groupId>
-            <artifactId>abstract-plugin-framework</artifactId>
-            <version>2.0.3</version>
-            <scope>compile</scope>
+            <artifactId>AbstractPluginFramework</artifactId>
+            <version>3.1.1</version>
         </dependency>
     </dependencies>
     <build>
@@ -64,6 +77,12 @@
                             <exclude>org.*:*</exclude>
                         </excludes>
                     </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.djrapitops.plugin</pattern>
+                            <shadedPattern>com.djrapitops.plugin.genie</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>

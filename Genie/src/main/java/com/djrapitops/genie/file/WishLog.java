@@ -6,15 +6,16 @@
 package com.djrapitops.genie.file;
 
 import com.djrapitops.genie.Genie;
+import com.djrapitops.plugin.api.utility.log.FileLogger;
+import org.bukkit.entity.Player;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.bukkit.entity.Player;
 
 /**
- *
  * @author Risto
  */
 public class WishLog {
@@ -26,7 +27,11 @@ public class WishLog {
     }
 
     public void madeAWish(Player p, String wish) {
-        plugin.getPluginLogger().toLog(p.getName() + ": " + wish, "Wishlog.txt");
+        try {
+            FileLogger.appendToFile(new File(plugin.getDataFolder(), "Wishlog.txt"), p.getName() + ": " + wish);
+        } catch (IOException e) {
+            /* Ignored */
+        }
     }
 
     public List<String> getWishesBy(String playerName) throws IOException {

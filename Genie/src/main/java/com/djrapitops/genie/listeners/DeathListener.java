@@ -1,11 +1,9 @@
 package com.djrapitops.genie.listeners;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-
-import com.djrapitops.plugin.utilities.version.EnumUtility;
+import com.djrapitops.genie.Genie;
+import com.djrapitops.genie.Settings;
+import com.djrapitops.genie.lamp.LampManager;
+import com.djrapitops.plugin.api.utility.EnumUtility;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -17,9 +15,10 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Settings;
-import com.djrapitops.genie.lamp.LampManager;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * @author Rsl1122

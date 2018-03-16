@@ -1,8 +1,8 @@
 package com.djrapitops.genie.wishes;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.plugin.api.Priority;
+import com.djrapitops.plugin.api.utility.log.Log;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 

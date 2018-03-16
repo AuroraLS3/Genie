@@ -9,7 +9,6 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- *
  * @author Rsl1122
  */
 public class FlyingWish extends Wish {

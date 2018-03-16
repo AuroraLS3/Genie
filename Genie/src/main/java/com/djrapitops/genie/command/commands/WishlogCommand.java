@@ -1,21 +1,22 @@
 package com.djrapitops.genie.command.commands;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.genie.file.WishLog;
 import com.djrapitops.genie.utilities.Check;
+import com.djrapitops.plugin.api.utility.log.Log;
 import com.djrapitops.plugin.command.CommandType;
 import com.djrapitops.plugin.command.ISender;
 import com.djrapitops.plugin.command.SubCommand;
 import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.task.AbsRunnable;
+import com.djrapitops.plugin.task.RunnableFactory;
 import com.djrapitops.plugin.utilities.Verify;
-import java.io.IOException;
-import java.util.List;
 import org.bukkit.ChatColor;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
- *
  * @author Rsl1122
  */
 public class WishlogCommand extends SubCommand {
@@ -23,7 +24,7 @@ public class WishlogCommand extends SubCommand {
     private final Genie plugin;
 
     public WishlogCommand(Genie plugin) {
-        super("wishlog, log, wl", CommandType.CONSOLE_WITH_ARGUMENTS, "genie.admin", "See all wishes made by a player", "<playername>");
+        super("wishlog, log, wl", CommandType.PLAYER_OR_ARGS, "genie.admin", "See all wishes made by a player", "<playername>");
         this.plugin = plugin;
     }
 
@@ -41,7 +42,8 @@ public class WishlogCommand extends SubCommand {
         String name = args[0];
 
         WishLog wishLog = plugin.getWishLog();
-        plugin.getRunnableFactory().createNew(new AbsRunnable("Wishlog read task") {
+        plugin.getRunnableFactory();
+        RunnableFactory.createNew(new AbsRunnable("Wishlog read task") {
             @Override
             public void run() {
                 List<String> wishes = null;

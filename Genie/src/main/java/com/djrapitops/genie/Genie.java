@@ -1,16 +1,20 @@
 package com.djrapitops.genie;
 
 import com.djrapitops.genie.command.GenieCommand;
-import com.djrapitops.genie.file.*;
+import com.djrapitops.genie.file.LampStorage;
+import com.djrapitops.genie.file.UnfulfilledWishStorage;
+import com.djrapitops.genie.file.WishConfigSectionHandler;
+import com.djrapitops.genie.file.WishLog;
 import com.djrapitops.genie.lamp.LampManager;
-import com.djrapitops.genie.listeners.*;
+import com.djrapitops.genie.listeners.ChatListener;
+import com.djrapitops.genie.listeners.DeathListener;
+import com.djrapitops.genie.listeners.ItemInteractionListener;
 import com.djrapitops.genie.wishes.WishManager;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import com.djrapitops.plugin.BukkitPlugin;
+import com.djrapitops.plugin.StaticHolder;
+import com.djrapitops.plugin.api.systems.TaskCenter;
+import com.djrapitops.plugin.api.utility.Version;
+import com.djrapitops.plugin.api.utility.log.Log;
 import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.utilities.Verify;
 import org.bukkit.Bukkit;
@@ -18,12 +22,16 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.configuration.InvalidConfigurationException;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Main class.
  *
  * @author Rsl1122
  */
-public class Genie extends BukkitPlugin<Genie> {
+public class Genie extends BukkitPlugin {
 
     private API api;
     private WishLog wishLog;
@@ -36,22 +44,25 @@ public class Genie extends BukkitPlugin<Genie> {
     private List<String> worldBlacklist;
     private Messages messages;
 
+    public static Genie getInstance() {
+        return (Genie) StaticHolder.getInstance(Genie.class);
+    }
+
+    public static API getAPI() {
+        return getInstance().api;
+    }
+
     @Override
     public void onEnable() {
-        setInstance(this);
+        super.onEnable();
 
         getConfig().options().copyDefaults(true);
         getConfig().options().header("Genie Config");
         saveConfig();
 
-        super.setLogPrefix("[Genie]");
-        super.setUpdateUrl("https://www.spigotmc.org/resources/genie.43260/");
-        super.setUpdateCheckUrl("https://raw.githubusercontent.com/Rsl1122/Genie/master/Genie/src/main/resources/plugin.yml");
-        super.setColorScheme(new ColorScheme(ChatColor.DARK_AQUA, ChatColor.GRAY, ChatColor.AQUA));
-        super.setDebugMode(getConfig().getString(Settings.DEBUG.getPath()));
-        super.onEnableDefaultTasks();
+        Log.setDebugMode(getConfig().getString(Settings.DEBUG.getPath()));
 
-        processStatus().startExecution("onEnable");
+        checkForNewVersion();
 
         updateWorldBlacklist();
 
@@ -68,7 +79,7 @@ public class Genie extends BukkitPlugin<Genie> {
         } catch (NullPointerException | IOException | InvalidConfigurationException ex) {
             Log.error("Plugin initialization has failed, disabling plugin.");
             Log.toLog(this.getClass().getName(), ex);
-            disablePlugin();
+            onDisable();
             return;
         }
 
@@ -76,18 +87,28 @@ public class Genie extends BukkitPlugin<Genie> {
         registerListener(new DeathListener(this));
         registerListener(new ItemInteractionListener(this));
 
-        registerCommand(new GenieCommand(this));
+        registerCommand("genie", new GenieCommand(this));
 
         api = new API(this);
 
-        processStatus().finishExecution("onEnable");
         Log.info("Plugin Enabled.");
+    }
+
+    private void checkForNewVersion() {
+        try {
+            if (Version.checkVersion(getVersion(), "https://raw.githubusercontent.com/Rsl1122/Genie/master/Genie/src/main/resources/plugin.yml")
+                    || Version.checkVersion(getVersion(), "https://www.spigotmc.org/resources/genie.43260/")) {
+                Log.info("New version available at: https://www.spigotmc.org/resources/genie.43260/");
+            }
+        } catch (NoClassDefFoundError | IOException e) {
+            Log.info("Error checking for new version: " + e.getMessage());
+        }
     }
 
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
-        taskStatus().cancelAllKnownTasks();
+        TaskCenter.cancelAllKnownTasks(Genie.class);
         Log.info("Plugin Disabled.");
     }
 
@@ -100,14 +121,6 @@ public class Genie extends BukkitPlugin<Genie> {
 
     public boolean isWorldAllowed(World w) {
         return !worldBlacklist.contains(w.getName().toLowerCase());
-    }
-
-    public static Genie getInstance() {
-        return (Genie) getPluginInstance(Genie.class);
-    }
-
-    public static API getAPI() {
-        return getInstance().api;
     }
 
     public WishLog getWishLog() {
@@ -132,5 +145,19 @@ public class Genie extends BukkitPlugin<Genie> {
 
     public UnfulfilledWishStorage getUnfulfilledWishStore() {
         return unfulfilledWishStore;
+    }
+
+    public ColorScheme getColorScheme() {
+        return new ColorScheme(ChatColor.DARK_AQUA, ChatColor.GRAY, ChatColor.AQUA);
+    }
+
+    @Override
+    public void onReload() {
+
+    }
+
+    @Override
+    public String getVersion() {
+        return getDescription().getVersion();
     }
 }

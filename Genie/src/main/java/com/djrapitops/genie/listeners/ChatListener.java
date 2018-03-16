@@ -9,9 +9,6 @@ import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.task.AbsRunnable;
-
-import java.util.UUID;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +16,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 /**
  * @author Rsl1122
@@ -54,7 +53,6 @@ public class ChatListener implements Listener {
                     LampManager lampManager = plugin.getLampManager();
                     Lamp lamp = lampManager.getLamp(lampUUID);
                     Messages msg = plugin.getMsg();
-
 
                     String prefix = mCol + "[Genie] " + sCol;
                     if (!lamp.hasWishesLeft()) {

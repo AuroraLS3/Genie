@@ -21,10 +21,12 @@ public class GenieCommand extends TreeCommand<Genie> {
 
     @Override
     public void addCommands() {
-        commands.add(new GiveLampCommand(plugin));
-        commands.add(new TestWishCommand(plugin));
-        commands.add(new WishlogCommand(plugin));
-        commands.add(new StatusCommand<>(plugin, this.getPermission()));
+        add(
+                new GiveLampCommand(plugin),
+                new TestWishCommand(plugin),
+                new WishlogCommand(plugin),
+                new StatusCommand<>(plugin, this.getPermission(), plugin.getColorScheme())
+        );
     }
 
 }

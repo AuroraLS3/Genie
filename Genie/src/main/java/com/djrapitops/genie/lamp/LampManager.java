@@ -1,12 +1,13 @@
 package com.djrapitops.genie.lamp;
 
 import com.djrapitops.genie.Genie;
-import com.djrapitops.genie.Log;
 import com.djrapitops.genie.file.LampStorage;
+import com.djrapitops.plugin.api.utility.log.Log;
+import org.bukkit.Location;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.UUID;
-import org.bukkit.Location;
 
 /**
  * Class for each lamp in the world.

@@ -1,6 +1,6 @@
 package com.djrapitops.genie.lamp;
 
-import com.djrapitops.genie.Log;
+import com.djrapitops.plugin.api.utility.log.Log;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -44,14 +44,6 @@ public class LampItem extends ItemStack {
         super.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 1);
     }
 
-    private String getHiddenUUID(UUID lampID) {
-        StringBuilder hiddenUUID = new StringBuilder();
-        for (char c : lampID.toString().toCharArray()) {
-            hiddenUUID.append(ChatColor.COLOR_CHAR).append(c);
-        }
-        return hiddenUUID.toString();
-    }
-
     public static boolean isLampItem(ItemStack item) {
         LampItem lampVariables = new LampItem();
         String lore1 = lampVariables.lore1;
@@ -74,5 +66,13 @@ public class LampItem extends ItemStack {
             Log.toLog("getLampUUID", e);
         }
         return null;
+    }
+
+    private String getHiddenUUID(UUID lampID) {
+        StringBuilder hiddenUUID = new StringBuilder();
+        for (char c : lampID.toString().toCharArray()) {
+            hiddenUUID.append(ChatColor.COLOR_CHAR).append(c);
+        }
+        return hiddenUUID.toString();
     }
 }

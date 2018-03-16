@@ -13,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
- *
  * @author Rsl1122
  */
 public class EnchantmentWish extends Wish {

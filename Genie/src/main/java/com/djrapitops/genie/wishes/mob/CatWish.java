@@ -7,7 +7,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
- *
  * @author Rsl1122
  */
 public class CatWish extends Wish {

@@ -1,8 +1,8 @@
 package com.djrapitops.genie.wishes;
 
-import static org.bukkit.Bukkit.getOnlinePlayers;
-
 import org.bukkit.entity.Player;
+
+import static org.bukkit.Bukkit.getOnlinePlayers;
 
 /**
  * Abstract class representing a possible wish.
