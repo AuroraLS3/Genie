@@ -4,7 +4,6 @@ import com.djrapitops.genie.Genie;
 import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.genie.utilities.Check;
-import com.djrapitops.plugin.api.utility.UUIDFetcher;
 import com.djrapitops.plugin.command.CommandType;
 import com.djrapitops.plugin.command.CommandUtils;
 import com.djrapitops.plugin.command.ISender;
@@ -12,11 +11,7 @@ import com.djrapitops.plugin.command.SubCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.Optional;
-import java.util.UUID;
-
 import static org.bukkit.Bukkit.getOnlinePlayers;
-import static org.bukkit.Bukkit.getPlayer;
 
 /**
  * Command used to give a player the lamp.
@@ -70,16 +65,9 @@ public class GiveLampCommand extends SubCommand {
             receiver = (Player) sender.getSender();
         } else {
             String name = args[0];
-            UUID uuid = null;
-            try {
-                uuid = UUIDFetcher.getUUIDOf(name);
-            } catch (Exception ignored) {
-            }
-            if (uuid == null) {
-                Optional<? extends Player> found = getOnlinePlayers().stream().filter(player -> name.equals(player.getName())).findFirst();
-                return found.orElse(null);
-            }
-            receiver = getPlayer(uuid);
+            return getOnlinePlayers().stream()
+                    .filter(player -> name.equals(player.getName()))
+                    .findFirst().orElse(null);
         }
         return receiver;
     }

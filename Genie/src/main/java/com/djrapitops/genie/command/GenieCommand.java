@@ -28,5 +28,4 @@ public class GenieCommand extends TreeCommand<Genie> {
                 new StatusCommand<>(plugin, this.getPermission(), plugin.getColorScheme())
         );
     }
-
 }
