@@ -56,7 +56,7 @@ public class WishManager {
         toAdd.add(new ArmorWish("LEATHER"));
         toAdd.add(new ArmorWish("DIAMOND"));
         toAdd.add(new ArmorWish("IRON"));
-        toAdd.add(new ArmorWish("GOLD"));
+        toAdd.add(new ArmorWish("GOLDEN"));
         toAdd.add(new DogWish());
         toAdd.add(new DogTreatWish());
         toAdd.add(new CatWish());
