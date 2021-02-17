@@ -2,7 +2,6 @@ package com.djrapitops.genie;
 
 import com.djrapitops.genie.command.GenieCommand;
 import com.djrapitops.genie.file.LampStorage;
-import com.djrapitops.genie.file.UnfulfilledWishStorage;
 import com.djrapitops.genie.file.WishConfigSectionHandler;
 import com.djrapitops.genie.file.WishLog;
 import com.djrapitops.genie.lamp.LampManager;
@@ -38,8 +37,6 @@ public class Genie extends BukkitPlugin {
     private WishConfigSectionHandler wishConfigSectionHandler;
     private LampManager lampManager;
 
-    private UnfulfilledWishStorage unfulfilledWishStore;
-
     private List<String> worldBlacklist;
     private Messages messages;
 
@@ -72,7 +69,6 @@ public class Genie extends BukkitPlugin {
 
         try {
             LampStorage lampStorage = new LampStorage(this);
-            unfulfilledWishStore = new UnfulfilledWishStorage(this);
             lampManager = new LampManager(lampStorage);
             Verify.nullCheck(wishLog, wishManager, messages, lampManager, worldBlacklist);
         } catch (Exception ex) {
@@ -140,10 +136,6 @@ public class Genie extends BukkitPlugin {
 
     public Messages getMsg() {
         return messages;
-    }
-
-    public UnfulfilledWishStorage getUnfulfilledWishStore() {
-        return unfulfilledWishStore;
     }
 
     public ColorScheme getColorScheme() {

@@ -77,7 +77,6 @@ public class ChatListener implements Listener {
                         }
                     } else {
                         player.sendMessage(prefix + plugin.getMsg().getMessage(MessageType.CANNOT_FIND));
-                        plugin.getUnfulfilledWishStore().addWish(message);
                         event.setCancelled(true);
                     }
                 } finally {
