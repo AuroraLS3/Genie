@@ -9,8 +9,6 @@ import com.djrapitops.plugin.command.SubCommand;
 import com.djrapitops.plugin.settings.ColorScheme;
 import org.bukkit.ChatColor;
 
-import java.util.Arrays;
-
 /**
  * Command used to test a wish.
  *
@@ -42,7 +40,7 @@ public class TestWishCommand extends SubCommand {
         if (matchingWish == null) {
             sender.sendMessage(prefix + "Did not match any wish.");
         } else {
-            sender.sendMessage(prefix + "Matching wish: " + Arrays.toString(matchingWish.getAliases()));
+            sender.sendMessage(prefix + "Matching wish: " + matchingWish.getReadableRepresentation());
         }
         return true;
     }

@@ -64,4 +64,16 @@ public abstract class Wish {
         int remaining = removed.length();
         return remaining * 1.0 / alias.replace(", ", "").length();
     }
+
+    public String getReadableRepresentation() {
+        StringBuilder readableWish = new StringBuilder();
+
+        readableWish.append(aliases[0]);
+        for (int i = 1; i < aliases.length; i++) {
+            readableWish.append(", ").append(aliases[i]);
+        }
+        readableWish.append(": ").append(getClass().getSimpleName());
+
+        return readableWish.toString();
+    }
 }
