@@ -11,7 +11,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class ExplosionWish extends Wish {
 

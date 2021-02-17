@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class AnimalWish extends Wish {
 

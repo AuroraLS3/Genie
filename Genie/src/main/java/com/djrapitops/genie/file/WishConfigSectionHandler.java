@@ -9,7 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
  * Class responsible for generating and generating settings for PluginData
  * objects to the config.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  * @since 3.5.0
  */
 public class WishConfigSectionHandler {

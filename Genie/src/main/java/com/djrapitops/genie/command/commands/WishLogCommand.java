@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class WishLogCommand extends SubCommand {
 

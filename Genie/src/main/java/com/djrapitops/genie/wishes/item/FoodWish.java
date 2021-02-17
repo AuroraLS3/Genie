@@ -10,7 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class FoodWish extends Wish {
 

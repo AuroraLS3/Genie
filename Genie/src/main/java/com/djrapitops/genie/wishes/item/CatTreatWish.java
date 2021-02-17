@@ -10,7 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class CatTreatWish extends Wish {
 
@@ -20,7 +20,7 @@ public class CatTreatWish extends Wish {
 
     @Override
     public boolean fulfillWish(Player p) {
-        return new ItemWish(Material.RAW_FISH, 20).fulfillWish(p);
+        return new ItemWish(Material.SALMON, 20).fulfillWish(p);
     }
 
 }

@@ -26,7 +26,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.*;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class WishManager {
 

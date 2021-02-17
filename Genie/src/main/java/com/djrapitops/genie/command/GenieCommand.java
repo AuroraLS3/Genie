@@ -11,7 +11,7 @@ import com.djrapitops.plugin.command.defaultcmds.StatusCommand;
 /**
  * Genie admin command
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class GenieCommand extends TreeCommand<Genie> {
 

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class ItemWish extends Wish {
 

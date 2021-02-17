@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class LampItem extends ItemStack {
 
@@ -26,16 +26,16 @@ public class LampItem extends ItemStack {
 
     }
 
-    @SuppressWarnings("deprecation")
     public LampItem(UUID lampID) {
         super(Material.GOLD_INGOT);
 
         ItemMeta meta = this.getItemMeta();
 
+
         try {
             meta.setUnbreakable(true);
         } catch (NoSuchMethodError ex) {
-            meta.spigot().setUnbreakable(true);
+            meta.setUnbreakable(true);
         }
 
         meta.setDisplayName("" + ChatColor.RESET + ChatColor.GOLD + "Genie Lamp");

@@ -3,7 +3,7 @@ package com.djrapitops.genie.wishes;
 import java.util.Comparator;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class WishComparator implements Comparator<Wish> {
 

@@ -6,7 +6,7 @@ import java.util.Comparator;
  * Sorts the wishes with the lowest remaining characters after wish words were
  * removed.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class WishMatchComparator implements Comparator<Wish> {
 

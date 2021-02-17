@@ -14,7 +14,7 @@ import java.util.Arrays;
 /**
  * Command used to test a wish.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class TestWishCommand extends SubCommand {
 

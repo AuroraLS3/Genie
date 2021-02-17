@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * Main class.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class Genie extends BukkitPlugin {
 
@@ -95,7 +95,7 @@ public class Genie extends BukkitPlugin {
 
     private void checkForNewVersion() {
         try {
-            if (Version.checkVersion(getVersion(), "https://raw.githubusercontent.com/Rsl1122/Genie/master/Genie/src/main/resources/plugin.yml")
+            if (Version.checkVersion(getVersion(), "https://raw.githubusercontent.com/AuroraLS3/Genie/master/Genie/src/main/resources/plugin.yml")
                     || Version.checkVersion(getVersion(), "https://www.spigotmc.org/resources/genie.43260/")) {
                 Log.info("New version available at: https://www.spigotmc.org/resources/genie.43260/");
             }

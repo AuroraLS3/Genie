@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.UUID;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class ItemInteractionListener implements Listener {
 

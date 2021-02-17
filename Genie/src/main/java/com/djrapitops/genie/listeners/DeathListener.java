@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class DeathListener implements Listener {
 

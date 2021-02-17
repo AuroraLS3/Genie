@@ -8,7 +8,7 @@ import java.util.*;
  * Class that contains message parts and variations to make genie more live
  * like.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class Messages {
 

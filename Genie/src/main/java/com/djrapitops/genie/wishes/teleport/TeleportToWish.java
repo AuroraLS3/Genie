@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import java.util.UUID;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class TeleportToWish extends PlayerSpecificWish {
 

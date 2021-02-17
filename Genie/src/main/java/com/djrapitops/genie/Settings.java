@@ -6,7 +6,7 @@
 package com.djrapitops.genie;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public enum Settings {
     DEBUG("Settings.Debug"),

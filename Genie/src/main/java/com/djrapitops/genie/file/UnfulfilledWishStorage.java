@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Class responsible for saving and loading lamp data.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class UnfulfilledWishStorage extends Config {
 

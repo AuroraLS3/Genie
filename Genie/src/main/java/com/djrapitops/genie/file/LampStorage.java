@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Class responsible for saving and loading lamp data.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class LampStorage extends Config {
 

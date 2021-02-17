@@ -7,7 +7,7 @@ import static org.bukkit.Bukkit.getOnlinePlayers;
 /**
  * Abstract class representing a possible wish.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public abstract class Wish {
 

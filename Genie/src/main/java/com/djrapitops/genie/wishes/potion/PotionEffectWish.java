@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class PotionEffectWish extends Wish {
 

@@ -8,7 +8,7 @@ package com.djrapitops.genie;
 /**
  * Enum used with Messages class to get message variations.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public enum MessageType {
     SUMMON,

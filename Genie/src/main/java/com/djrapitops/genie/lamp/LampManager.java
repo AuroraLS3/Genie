@@ -11,7 +11,7 @@ import java.util.UUID;
 /**
  * Class for each lamp in the world.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class LampManager {
 

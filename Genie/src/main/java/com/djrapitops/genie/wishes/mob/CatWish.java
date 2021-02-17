@@ -7,7 +7,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 /**
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class CatWish extends Wish {
 
@@ -18,7 +18,7 @@ public class CatWish extends Wish {
     @Override
     public boolean fulfillWish(Player p) {
         return new SpawnMobWish(EntityType.OCELOT).fulfillWish(p)
-                && new ItemWish(Material.RAW_FISH, 20).fulfillWish(p);
+                && new ItemWish(Material.SALMON, 20).fulfillWish(p);
     }
 
 }

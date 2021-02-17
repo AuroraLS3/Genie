@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * Object that represents a lamp item in an inventory.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class Lamp {
 

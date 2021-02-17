@@ -16,7 +16,7 @@ import static org.bukkit.Bukkit.getOnlinePlayers;
 /**
  * Command used to give a player the lamp.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class GiveLampCommand extends SubCommand {
 

@@ -6,7 +6,7 @@ import com.djrapitops.plugin.command.ISender;
  * Class containing static check methods with message sending capabilities if
  * the check is false.
  *
- * @author Rsl1122
+ * @author AuroraLS3
  */
 public class Check {
 
