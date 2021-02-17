@@ -8,8 +8,6 @@ import com.djrapitops.genie.lamp.Lamp;
 import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.plugin.settings.ColorScheme;
-import com.djrapitops.plugin.task.AbsRunnable;
-import com.djrapitops.plugin.task.RunnableFactory;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -37,67 +36,60 @@ public class ChatListener implements Listener {
         if (!plugin.isWorldAllowed(player.getWorld())) {
             return;
         }
-        ItemStack item = getItemInHand(player);
-        if (item == null || !LampItem.isLampItem(item)) {
+        ItemStack item = getItemInHand(player).filter(LampItem::isLampItem)
+                .orElse(null);
+        if (item == null) return;
+        ColorScheme color = plugin.getColorScheme();
+        String mCol = color.getMainColor();
+        String sCol = color.getSecondaryColor();
+
+        String lampIDLine = item.getItemMeta().getLore().get(2);
+        UUID lampUUID = LampItem.getLampUUID(lampIDLine);
+        LampManager lampManager = plugin.getLampManager();
+        Lamp lamp = lampManager.getLamp(lampUUID);
+        Messages msg = plugin.getMsg();
+
+        String prefix = mCol + "[Genie] " + sCol;
+        if (!lamp.hasWishesLeft()) {
+            player.sendMessage(prefix + msg.getMessage(MessageType.OUT_OF_WISHES));
             return;
         }
-        RunnableFactory.createNew(new AbsRunnable("Wish Event") {
-            @Override
-            public void run() {
-                try {
-                    ColorScheme color = plugin.getColorScheme();
-                    String mCol = color.getMainColor();
-                    String sCol = color.getSecondaryColor();
+        String message = event.getMessage().toLowerCase();
 
-                    String lampIDLine = item.getItemMeta().getLore().get(2);
-                    UUID lampUUID = LampItem.getLampUUID(lampIDLine);
-                    LampManager lampManager = plugin.getLampManager();
-                    Lamp lamp = lampManager.getLamp(lampUUID);
-                    Messages msg = plugin.getMsg();
+        if (makeAWish(player, message)) {
+            lampManager.wish(lamp);
+            String wishesLeft = color.getTertiaryColor() + "" + lamp.getWishes() + sCol;
 
-                    String prefix = mCol + "[Genie] " + sCol;
-                    if (!lamp.hasWishesLeft()) {
-                        player.sendMessage(prefix + msg.getMessage(MessageType.OUT_OF_WISHES));
-                        return;
-                    }
-                    String message = event.getMessage().toLowerCase();
+            player.sendMessage(prefix + msg.getMessage(MessageType.WISHES_LEFT).replace("WISHES", wishesLeft));
 
-                    if (makeAWish(player, message)) {
-                        lampManager.wish(lamp);
-                        String wishesLeft = color.getTertiaryColor() + "" + lamp.getWishes() + sCol;
+            String fulfillMsg = mCol + "[Genie] " + ChatColor.GOLD + msg.getMessage(MessageType.FULFILL);
 
-                        player.sendMessage(prefix + msg.getMessage(MessageType.WISHES_LEFT).replace("WISHES", wishesLeft));
-
-                        String fulfillMsg = mCol + "[Genie] " + ChatColor.GOLD + msg.getMessage(MessageType.FULFILL);
-
-                        if (plugin.getConfig().getBoolean(Settings.ANNOUNCE_WISH_FULFILL.getPath())) {
-                            player.getServer().getOnlinePlayers().forEach(p -> p.sendMessage(fulfillMsg));
-                        } else {
-                            player.sendMessage(fulfillMsg);
-                        }
-                    } else {
-                        player.sendMessage(prefix + plugin.getMsg().getMessage(MessageType.CANNOT_FIND));
-                        event.setCancelled(true);
-                    }
-                } finally {
-                    this.cancel();
-                }
+            if (plugin.getConfig().getBoolean(Settings.ANNOUNCE_WISH_FULFILL.getPath())) {
+                player.getServer().getOnlinePlayers().forEach(p -> p.sendMessage(fulfillMsg));
+            } else {
+                player.sendMessage(fulfillMsg);
             }
-        }).runTaskAsynchronously();
+        } else {
+            player.sendMessage(prefix + plugin.getMsg().getMessage(MessageType.CANNOT_FIND));
+            event.setCancelled(true);
+        }
     }
 
     @SuppressWarnings("deprecation")
-    private ItemStack getItemInHand(Player player) {
-        ItemStack item = null;
+    private Optional<ItemStack> getItemInHand(Player player) {
         try {
-            item = player.getInventory().getItemInMainHand();
+            return Optional.ofNullable(player.getInventory().getItemInMainHand());
         } catch (Throwable e) {
-            try {
-                item = player.getInventory().getItemInHand(); // Old version support
-            } catch (Throwable ignored) {
-            }
+            return getItemInHandOldVersion(player);
         }
-        return item;
+    }
+
+    private Optional<ItemStack> getItemInHandOldVersion(Player player) {
+        try {
+            return Optional.ofNullable(player.getInventory().getItemInHand()); // Old version support
+        } catch (Throwable ignored) {
+        }
+        return Optional.empty();
     }
 
     private boolean makeAWish(Player player, String message) {

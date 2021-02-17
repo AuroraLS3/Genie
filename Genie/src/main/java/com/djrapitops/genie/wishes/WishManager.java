@@ -12,7 +12,6 @@ import com.djrapitops.genie.wishes.teleport.TeleportHereWish;
 import com.djrapitops.genie.wishes.teleport.TeleportToBedWish;
 import com.djrapitops.genie.wishes.teleport.TeleportToWish;
 import com.djrapitops.genie.wishes.world.*;
-import com.djrapitops.plugin.api.utility.EnumUtility;
 import com.djrapitops.plugin.api.utility.log.Log;
 import com.djrapitops.plugin.task.AbsRunnable;
 import com.djrapitops.plugin.task.RunnableFactory;
@@ -84,7 +83,6 @@ public class WishManager {
         if (Verify.isEmpty(customLines)) {
             return;
         }
-        Map<String, String[]> commands = new HashMap<>();
         for (String customLine : customLines) {
             String[] parts = customLine.split(" \\| ");
             if (parts.length < 2) {
@@ -120,30 +118,30 @@ public class WishManager {
     }
 
     private void addPotionWishes(List<Wish> toAdd) {
-        List<PotionEffectType> prevented = getPreventedPotions();
+        Set<PotionEffectType> prevented = getPreventedPotions();
         for (PotionEffectType potion : PotionEffectType.values()) {
             if (potion == null) {
                 continue;
             }
-            if (!Verify.contains(potion, prevented)) {
+            if (!prevented.contains(potion)) {
                 toAdd.add(new PotionEffectWish(potion));
             }
         }
     }
 
     private void addItemWishes(List<Wish> toAdd) {
-        List<Material> preventedMats = getPreventedItems();
+        Set<Material> preventedMats = getPreventedItems();
         for (Material material : Material.values()) {
-            if (!Verify.contains(material, preventedMats)) {
+            if (!preventedMats.contains(material)) {
                 toAdd.add(new ItemWish(material));
             }
         }
     }
 
     private void addMobWishes(List<Wish> toAdd) {
-        List<EntityType> prevented = getPreventedEntities();
+        Set<EntityType> prevented = getPreventedEntities();
         for (EntityType mob : EntityType.values()) {
-            if (!Verify.contains(mob, prevented)) {
+            if (!prevented.contains(mob)) {
                 toAdd.add(new SpawnMobWish(mob));
             }
             for (EntityType stackMob : EntityType.values()) {
@@ -154,52 +152,45 @@ public class WishManager {
         }
     }
 
-    private List<PotionEffectType> getPreventedPotions() {
-        return EnumUtility.getSupportedEnumValues(PotionEffectType.class,
-                "WITHER", "HEAL"
-        );
+    private Set<PotionEffectType> getPreventedPotions() {
+        Set<PotionEffectType> preventedEffects = new HashSet<>();
+        for (String effectName : plugin.getConfig().getStringList("Customization.Unsafe_potion_effects")) {
+            try {
+                PotionEffectType type = PotionEffectType.getByName(effectName);
+                if (type == null) throw new IllegalArgumentException();
+                preventedEffects.add(type);
+            } catch (IllegalArgumentException e) {
+                Log.warn("Unknown unsafe entity in config: '" + effectName + "'");
+            }
+        }
+        return preventedEffects;
     }
 
-    private List<EntityType> getPreventedEntities() {
-        return EnumUtility.getSupportedEnumValues(EntityType.class,
-                "AREA_EFFECT_CLOUD", "ARMOR_STAND", "COMPLEX_PART",
-                "DRAGON_FIREBALL", "DROPPED_ITEM", "EGG",
-                "ENDER_PEARL", "ENDER_SIGNAL", "EXPERIENCE_ORB",
-                "FALLING_BLOCK", "FIREBALL", "FIREWORK",
-                "FISHING_HOOK", "EVOKER_FANGS", "ITEM_FRAME",
-                "LEASH_HITCH", "LIGHTNING", "LINGERING_POTION",
-                "LLAMA_SPIT", "MINECART", "MINECART_CHEST",
-                "MINECART_COMMAND", "MINECART_FURNACE", "MINECART_HOPPER",
-                "MINECART_MOB_SPAWNER", "MINECART_TNT", "PAINTING",
-                "PLAYER", "PRIMED_TNT", "SHULKER_BULLET",
-                "THROWN_EXP_BOTTLE", "TIPPED_ARROW", "UNKNOWN",
-                "WEATHER", "WITHER_SKULL", "ARROW", "BOAT",
-                "SPLASH_POTION", "SMALL_FIREBALL", "ENDER_DRAGON"
-        );
+    private Set<EntityType> getPreventedEntities() {
+        Set<EntityType> preventedEntities = new HashSet<>();
+        for (String entityName : plugin.getConfig().getStringList("Customization.Unsafe_entities")) {
+            try {
+                EntityType type = EntityType.valueOf(entityName);
+                preventedEntities.add(type);
+            } catch (IllegalArgumentException e) {
+                Log.warn("Unknown unsafe entity in config: '" + entityName + "'");
+            }
+        }
+        return preventedEntities;
     }
 
-    private List<Material> getPreventedItems() {
-        return EnumUtility.getSupportedEnumValues(Material.class,
-                "ACACIA_DOOR", "BEDROCK", "AIR",
-                "BED_BLOCK", "BEETROOT_BLOCK", "BIRCH_DOOR",
-                "BREWING_STAND", "BURNING_FURNACE", "CAKE_BLOCK",
-                "CARROT", "COMMAND", "CAULDRON",
-                "COMMAND", "COMMAND_CHAIN", "COMMAND_REPEATING",
-                "COMMAND_MINECART", "DIODE_BLOCK_ON", "DARK_OAK_DOOR",
-                "DAYLIGHT_DETECTOR_INVERTED", "DIODE_BLOCK_ON", "DIODE_BLOCK_OFF",
-                "DOUBLE_PLANT", "DOUBLE_STONE_SLAB2", "EMPTY_MAP",
-                "ENDER_PORTAL", "ENDER_PORTAL_FRAME", "FIREWORK_CHARGE",
-                "FLOWER_POT", "HUGE_MUSHROOM_1", "HUGE_MUSHROOM_2",
-                "IRON_DOOR_BLOCK", "JUNGLE_DOOR", "KNOWLEDGE_BOOK",
-                "MONSTER_EGG", "MONSTER_EGGS", "PISTON_BASE",
-                "PISTON_EXTENSION", "PISTON_MOVING_PIECE", "PISTON_STICKY_BASE",
-                "REDSTONE_COMPARATOR_OFF", "REDSTONE_LAMP_ON", "REDSTONE_TORCH_OFF",
-                "SIGN_POST", "SKULL", "SKULL_ITEM",
-                "SNOW", "SPRUCE_DOOR", "SUGAR_CANE_BLOCK",
-                "STRUCTURE_BLOCK", "STRUCTURE_VOID", "STANDING_BANNER",
-                "STATIONARY_WATER", "STATIONARY_LAVA", "TIPPED_ARROW",
-                "TRIPWIRE", "WALL_SIGN", "WATER", "WATER_LILY",
-                "LAVA", "WRITTEN_BOOK", "WALL_BANNER", "POTATO");
+    private Set<Material> getPreventedItems() {
+        Set<Material> preventedMaterials = new HashSet<>();
+        for (String materialName : plugin.getConfig().getStringList("Customization.Unsafe_materials")) {
+            try {
+                Material type = Material.getMaterial(materialName);
+                if (type == null) throw new IllegalArgumentException();
+                preventedMaterials.add(type);
+            } catch (IllegalArgumentException e) {
+                Log.warn("Unknown unsafe material in config: '" + materialName + "'");
+            }
+        }
+        return preventedMaterials;
     }
 
     public void addWish(Wish wish) {

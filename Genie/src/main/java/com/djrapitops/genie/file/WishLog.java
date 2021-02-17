@@ -43,7 +43,7 @@ public class WishLog {
                     this.cancel();
                 }
             }
-        });
+        }).runTaskAsynchronously();
     }
 
     public List<String> getWishesBy(String playerName) throws IOException {
