@@ -51,7 +51,6 @@ Customization:
     - THROWN_EXP_BOTTLE
     - TRIDENT
     - WANDERING_TRADER
-    - TIPPED_ARROW
     - UNKNOWN
     - WITHER
     - WITHER_SKULL
@@ -66,7 +65,7 @@ Customization:
     - BAMBOO
     - BARRIER
     - BEDROCK
-    - BEE_NEXT
+    - BEE_NEST
     - BEETROOTS
     - BUBBLE_COLUMN
     - CAVE_AIR
