@@ -21,6 +21,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
+import org.bukkit.event.HandlerList;
 
 import java.io.IOException;
 import java.util.List;
@@ -107,6 +108,7 @@ public class Genie extends BukkitPlugin {
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
         TaskCenter.cancelAllKnownTasks(Genie.class);
+        HandlerList.unregisterAll(this);
         Log.info("Plugin Disabled.");
     }
 

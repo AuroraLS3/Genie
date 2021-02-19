@@ -2,6 +2,7 @@ package com.djrapitops.genie.command;
 
 import com.djrapitops.genie.Genie;
 import com.djrapitops.genie.command.commands.GiveLampCommand;
+import com.djrapitops.genie.command.commands.ReloadCommand;
 import com.djrapitops.genie.command.commands.TestWishCommand;
 import com.djrapitops.genie.command.commands.WishLogCommand;
 import com.djrapitops.plugin.command.CommandType;
@@ -25,7 +26,8 @@ public class GenieCommand extends TreeCommand<Genie> {
                 new GiveLampCommand(plugin),
                 new TestWishCommand(plugin),
                 new WishLogCommand(plugin),
-                new StatusCommand<>(plugin, this.getPermission(), plugin.getColorScheme())
+                new StatusCommand<>(plugin, this.getPermission(), plugin.getColorScheme()),
+                new ReloadCommand(plugin)
         );
     }
 }
