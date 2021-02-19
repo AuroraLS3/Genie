@@ -43,10 +43,11 @@ public class ChatListener implements Listener {
         String mCol = color.getMainColor();
         String sCol = color.getSecondaryColor();
 
-        String lampIDLine = item.getItemMeta().getLore().get(2);
-        UUID lampUUID = LampItem.getLampUUID(lampIDLine);
+        Optional<UUID> lampUUID = LampItem.getLampUUID(item.getItemMeta());
+        if (!lampUUID.isPresent()) return;
+
         LampManager lampManager = plugin.getLampManager();
-        Lamp lamp = lampManager.getLamp(lampUUID);
+        Lamp lamp = lampManager.getLamp(lampUUID.get());
         Messages msg = plugin.getMsg();
 
         String prefix = mCol + "[Genie] " + sCol;

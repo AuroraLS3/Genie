@@ -15,12 +15,15 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author Risto
+ * @author AuroraLS3
  */
 public class WishLog {
 
@@ -31,12 +34,14 @@ public class WishLog {
     }
 
     public void madeAWish(Player p, String wish) {
+        File wishLog = new File(plugin.getDataFolder(), "Wishlog.txt");
         RunnableFactory.createNew(new AbsRunnable("Wishlog write") {
             @Override
             public void run() {
                 try {
                     String msg = "[" + FormatUtils.formatTimeStamp(TimeAmount.currentMs()) + "] " + p.getName() + ": " + wish;
-                    FileLogger.appendToFile(new File(plugin.getDataFolder(), "Wishlog.txt"), msg);
+                    Files.write(wishLog.toPath(), Collections.singletonList(msg), StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+                    FileLogger.appendToFile(wishLog, msg);
                 } catch (IOException e) {
                     /* Ignored */
                 } finally {

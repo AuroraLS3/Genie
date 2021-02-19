@@ -4,6 +4,7 @@ import com.djrapitops.genie.command.GenieCommand;
 import com.djrapitops.genie.file.LampStorage;
 import com.djrapitops.genie.file.WishConfigSectionHandler;
 import com.djrapitops.genie.file.WishLog;
+import com.djrapitops.genie.lamp.LampItem;
 import com.djrapitops.genie.lamp.LampManager;
 import com.djrapitops.genie.listeners.ChatListener;
 import com.djrapitops.genie.listeners.DeathListener;
@@ -18,6 +19,7 @@ import com.djrapitops.plugin.settings.ColorScheme;
 import com.djrapitops.plugin.utilities.Verify;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 
 import java.io.IOException;
@@ -51,6 +53,7 @@ public class Genie extends BukkitPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
+        LampItem.UUID_KEY = new NamespacedKey(this, "lamp_uuid");
 
         getConfig().options().copyDefaults(true);
         getConfig().options().header("Genie Config");

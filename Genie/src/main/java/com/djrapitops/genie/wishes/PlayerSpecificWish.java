@@ -14,7 +14,7 @@ import java.util.UUID;
 import static org.bukkit.Bukkit.getOnlinePlayers;
 
 /**
- * @author Risto
+ * @author AuroraLS3
  */
 public abstract class PlayerSpecificWish extends Wish {
 

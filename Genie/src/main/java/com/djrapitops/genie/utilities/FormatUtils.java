@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Risto
+ * @author AuroraLS3
  */
 public class FormatUtils {
 
